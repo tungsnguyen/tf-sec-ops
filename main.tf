@@ -49,7 +49,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "3389"
-    source_address_prefix      = "10.0.0.0/16"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
@@ -63,12 +63,12 @@ resource "azurerm_subnet_network_security_group_association" "nsg_sub_assoc" {
 module "server" {
   source = "./modules/terraform-azure-server"
 
-  subnet_id = azurerm_subnet.subnet.id
+  subnet_id           = azurerm_subnet.subnet.id
   resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
+  location            = azurerm_resource_group.rg.location
 
-  servername = "server1"
-  vm_size = "Standard_B2s"
+  servername     = "server1"
+  vm_size        = "Standard_B1s"
   admin_username = "terraadmin"
   admin_password = "P@ssw0rdP@ssw0rd"
   os = {
